@@ -13,24 +13,108 @@ pnpm dev
 # or
 bun dev
 ```
-
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+# Techstack
+![Next.js](https://img.shields.io/badge/Next.js-000000?logo=nextdotjs&logoColor=white)  
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)  
+![TailwindCSS](https://img.shields.io/badge/TailwindCSS-38B2AC?logo=tailwindcss&logoColor=white)  
+![Zustand](https://img.shields.io/badge/Zustand-443E38?logo=react&logoColor=white) 
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Teknologi                           | Kegunaan                              |
+| ----------------------------------- | ------------------------------------- |
+| **Next.js**                         | Framework React untuk SSR dan routing |
+| **React**                           | Library UI utama                      |
+| **Zustand**                         | State management global ringan        |
+| **Tailwind CSS**                    | Styling responsive dan modern         |
+| **JavaScript**                      | Bahasa pemrograman utama              |
 
-## Learn More
+# 📂 CRUD Flow (Request / Tracker)
+Read → Tampilkan di table / list.
+Create → Form input → simpan ke store atau API.
+Update → Klik edit → update store / API.
+Delete → Klik delete → hapus dari store / API.
 
-To learn more about Next.js, take a look at the following resources:
+# ⚡ Struktur Project
+src/
+ └─ app/
+     ├─ login/
+     ├─ master/
+     │    ├─ tracker/
+     │    │    ├─ [id]/
+     │    │    │   └─ page.jsx
+     │    │    ├─ create/
+     │    │    │   └─ page.jsx
+     │    │    └─ page.jsx
+     │    └─ request/
+     │         └─ ca   (mungkin belum selesai)
+ └─ tracker/
+      ├─ [id]/page.jsx
+      ├─ create/page.jsx
+      └─ page.jsx
+components/
+ ├─ Card.jsx
+ ├─ Icons.jsx
+ ├─ Navbar.jsx
+ ├─ Sidebar.jsx
+ └─ TableRequest.jsx
+globals.css
+layout.jsx
+not-found.jsx
+page.jsx
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+# Auth
+## Login
+![alt text](image.png)
+- Login berjalan dengan lancar menggunakan :
+    - username : fe.it.pml
+    - password : Password123?
+### Error Login
+- kendala login sebagai berikut :
+    1. ketika password salah server masih merespon dengan 200 OK
+    2. ketika token access telah habis, endpoint /token/refresh akan mengembalikan 401 jika menggunakan token refresh yang didapat dari login, akan tetapi jika menggunakan token access yang masih aktif, endpoint tersebut mengembalikan token yang baru.
+    
+## Logout
+![alt text](image-1.png)
+- Logout bisa digunakan untuk keluar dari akun yang sudah login, berjalan dengan baik tanpa kendala
 
-## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+# TRACKER & REQUEST PAGE
+- page Tracker $ Request Memiliki fungsi dan Kendala yang sama, dimana fitur dan kendalanya sebagai berikut :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![alt text](image-2.png)
+![alt text](image-3.png)
+## Create
+![alt text](image-4.png)
+![alt text](image-5.png)
+- Create berjalan dengan baik, hanya saja kadang butuh waktu yang lama untuk data baru bisa masuk ke database dan ditampilkan kembali
+
+## Read
+![alt text](image-2.png)
+- Read bisa menampilkan semua data 
+### Error Read
+- Icon tidak bisa ditampilkan karena tidak ada keterangan implementasi string yang dikembalikan server, seperti nama library atau element
+
+### Update
+![alt text](image-6.png)
+![alt text](image-7.png)
+- Update dapat berjalan dengan baik
+
+### Delete
+![alt text](image-8.png)
+![alt text](image-9.png)
+- Delete dapat berjalan dengan baik
+
+## Error Tracker & Request Page
+- error ada di pagination dan search, begitu juga dengan semua pagination di endpoint lain, semua terkendala di pagination , search, limit, dll
+![alt text](image-10.png)
+
+
+# Tracking Page
+![alt text](image-11.png)
+- Tracking Page bisa menampilkan data dengan baik, akan tetapi
+### Error Tracking Page
+![alt text](image-12.png)
+- Semua Fitur selain GET dan GETbyID semuanya error termasuk POST,PUT dan DELETE
+
