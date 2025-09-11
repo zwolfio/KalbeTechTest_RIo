@@ -37,32 +37,7 @@ Delete → Klik delete → hapus dari store / API.
 
 # ⚡ Struktur Project
 src/
- └─ app/
-     ├─ login/
-     ├─ master/
-     │    ├─ tracker/
-     │    │    ├─ [id]/
-     │    │    │   └─ page.jsx
-     │    │    ├─ create/
-     │    │    │   └─ page.jsx
-     │    │    └─ page.jsx
-     │    └─ request/
-     │         └─ ca   (mungkin belum selesai)
- └─ tracker/
-      ├─ [id]/page.jsx
-      ├─ create/page.jsx
-      └─ page.jsx
-components/
- ├─ Card.jsx
- ├─ Icons.jsx
- ├─ Navbar.jsx
- ├─ Sidebar.jsx
- └─ TableRequest.jsx
-globals.css
-layout.jsx
-not-found.jsx
-page.jsx
-
+![alt text](image-13.png)
 
 # Auth
 ## Login
