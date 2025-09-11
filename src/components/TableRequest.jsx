@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 
 
 export default function TableRequest({ data }) {
-  
+
 
   const { read } = useTrackerStore()
   const [trackers, setTrackers] = useState([]);
@@ -26,8 +26,8 @@ export default function TableRequest({ data }) {
       try {
         const data = await read(params);
         if (data?.data) {            // hanya set jika data valid
-        setTrackers(data.data);
-      }
+          setTrackers(data.data);
+        }
       } catch (error) {
         console.error("Error fetching trackers:", error);
       }
@@ -56,12 +56,8 @@ export default function TableRequest({ data }) {
           <button className="border rounded px-2 bg-green-600 text-white p-1 mx-2 hover:bg-green-700">Filter By</button>
         </div>
         <div>
-          <input
-            type="text"
-            placeholder="Search item"
-            className="border rounded p-1 text-sm"
-          />
-          <Link href={"/request/ca/create"} className="ml-2 bg-green-600 text-white px-3 py-1 rounded text-sm">Add</Link>
+          <Link href={"/request/ca/create"} className="ml-2 bg-green-600 text-white px-3 rounded p-2 text-sm font-medium">Add</Link>
+          <button className="rounded border-2 border-green-700 px-2 bg-white text-green-700 p-1 mx-2 hover:bg-gray-400 font-medium">RFA List</button>
         </div>
       </div>
       <div className="overflow-y-auto max-h-screen">

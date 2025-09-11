@@ -4,8 +4,9 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { useTrackingStore } from "@/store/trackingStore";
+import Swal from "sweetalert2";
 
-export default function TrackingUpdate({params}) {
+export default function TrackingUpdate({ params }) {
   const { id } = use(params);
   const router = useRouter();
   const { readbyid, update, deleteData, loading } = useTrackingStore();
@@ -24,12 +25,14 @@ export default function TrackingUpdate({params}) {
     if (!id) return;
 
     async function fetchData() {
+      Swal.showLoading();
       try {
         const res = await readbyid(id);
         setForm((prev) => ({
           ...prev,
           ...res.data,
         }));
+        Swal.close()
       } catch (err) {
         console.error("FETCH ERROR:", err);
       }
@@ -45,33 +48,119 @@ export default function TrackingUpdate({params}) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await update(form);
-      if (!loading) {
-        router.push("/tracker");
-      }
+      Swal.fire({
+        icon: "warning",
+        title: "Do you want to save the changes?",
+        showCancelButton: true,
+        confirmButtonText: "Save",
+        confirmButtonColor: "#199615",
+        denyButtonText: `Don't save`
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          const res = await update(form);
+          console.log("UPDATE RESULT:", res);
+          console.log(form)
+          if (!loading) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Update data Tracking Success"
+            });
+            setTimeout(() => {
+              router.push("/tracker");
+            }, 2000);
+          }
+        }
+      });
+
     } catch (err) {
       console.error("CREATE ERROR:", err);
-      alert("Failed to create tracking");
+      const Toast = Swal.mixin({
+        toast: true,
+        position: "top-end",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.onmouseenter = Swal.stopTimer;
+          toast.onmouseleave = Swal.resumeTimer;
+        }
+      });
+      Toast.fire({
+        icon: "error",
+        title: "Update Data Failed"
+      });
     }
   };
 
-  const handleDelete = async () => {
-    const payload = {
-      id: id,
-      deletedBy: "string",
-      doHardDelete: true,
-    };
-    try {
-      const res = await deleteData(payload);
-      console.log("DELETE RESULT:", res);
-      if (!loading) {
-        router.push("/tracking");
+    const handleDelete = async () => {
+      const payload = {
+        id: id,
+        "deletedBy": "string",
+        "doHardDelete": true
       }
-    } catch (error) {
-      console.error("DELETE ERROR:", error);
-      alert("Failed to delete request");
+      try {
+        Swal.fire({
+          icon: "warning",
+          title: "Do you want to Delete the Data?",
+          showCancelButton: true,
+          confirmButtonText: "Delete",
+          confirmButtonColor: "#FF0000",
+          denyButtonText: `Don't save`
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+          const res = await deleteData(payload)
+          console.log(res)
+          if (!loading) {
+            const Toast = Swal.mixin({
+              toast: true,
+              position: "top-end",
+              showConfirmButton: false,
+              timer: 2000,
+              timerProgressBar: true,
+              didOpen: (toast) => {
+                toast.onmouseenter = Swal.stopTimer;
+                toast.onmouseleave = Swal.resumeTimer;
+              }
+            });
+            Toast.fire({
+              icon: "success",
+              title: "Data Tracking Deleted"
+            });
+            setTimeout(() => {
+              router.push("/tracker");
+            }, 2000);
+          }}
+        })
+      } catch (error) {
+        console.error("UPDATE ERROR:", err);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Delete Data Failed"
+        });
+      }
     }
-  };
 
   return (
     <div className="lg:max-w-4xl lg:mx-auto p-6 bg-white shadow-xl rounded-xl mt-8 max-w-full mx-10">

@@ -4,19 +4,20 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { useTrackingStore } from "@/store/trackingStore";
+import Swal from "sweetalert2";
 
 export default function RequestCreate() {
     const router = useRouter();
     const { create, loading } = useTrackingStore();
 
     const [form, setForm] = useState({
-        trackerCode : "",
-        value : "",
-        trackerId : uuidv4(),
-        requestId : "",
-        partnerId : uuidv4(),
-        id : uuidv4(),
-        createdBy : ""
+        trackerCode: "",
+        value: "",
+        trackerId: uuidv4(),
+        requestId: "",
+        partnerId: uuidv4(),
+        id: uuidv4(),
+        createdBy: ""
     });
 
     const handleChange = (key, value) => {
@@ -25,14 +26,47 @@ export default function RequestCreate() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        Swal.showLoading();
         try {
             await create(form);
+            Swal.close();
             if (!loading) {
-                router.push("/tracker");
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Created data Tracking success"
+                });
+                setTimeout(() => {
+                    router.push("/tracker");
+                }, 2000);
             }
         } catch (err) {
             console.error("CREATE ERROR:", err);
-            alert("Failed to create tracking");
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "Create Data Failed"
+            });
         }
     };
 

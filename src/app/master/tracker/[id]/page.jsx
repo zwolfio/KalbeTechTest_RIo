@@ -64,6 +64,7 @@ export default function TrackerEdit({ params }) {
         title: "Do you want to save the changes?",
         showCancelButton: true,
         confirmButtonText: "Save",
+        confirmButtonColor: "#199615",
         denyButtonText: `Don't save`
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -122,7 +123,7 @@ export default function TrackerEdit({ params }) {
     try {
       Swal.fire({
         icon: "warning",
-        title: "Do you want to Delete the changes?",
+        title: "Do you want to Delete the data?",
         showCancelButton: true,
         confirmButtonText: "Delete",
         confirmButtonColor: "#FF0000",

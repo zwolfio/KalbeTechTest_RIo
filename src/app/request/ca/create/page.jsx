@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { v4 as uuidv4 } from "uuid";
 import { useRequestStore } from "@/store/requestStore";
+import Swal from "sweetalert2";
 
 export default function RequestCreate() {
     const router = useRouter();
@@ -30,16 +31,49 @@ export default function RequestCreate() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        Swal.showLoading();
         try {
-            await create(form);
+            const res = await create(form);
+            Swal.close();
             if (!loading) {
-                router.push("/request/ca");
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Created data Request in success"
+                });
+                setTimeout(() => {
+                    router.push("/request/ca");
+                }, 2000);
             }
         } catch (err) {
-            console.error("CREATE ERROR:", err);
-            alert("Failed to create request");
+            console.error(err);
+            const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.onmouseenter = Swal.stopTimer;
+                    toast.onmouseleave = Swal.resumeTimer;
+                }
+            });
+            Toast.fire({
+                icon: "error",
+                title: "Create Data Failed"
+            });
         }
-    };
+    }
 
     return (
         <div className="lg:max-w-4xl lg:mx-auto p-6 bg-white shadow-xl rounded-xl mt-8 max-w-full mx-10">

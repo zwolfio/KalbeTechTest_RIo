@@ -4,6 +4,7 @@ import { use } from "react";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useRequestStore } from "@/store/requestStore";
+import Swal from "sweetalert2";
 
 export default function RequestEdit({ params }) {
   const { id } = use(params);
@@ -27,7 +28,7 @@ export default function RequestEdit({ params }) {
 
   useEffect(() => {
     if (!id) return;
-
+    Swal.showLoading()
     async function fetchData() {
       try {
         const res = await readbyid(id);
@@ -35,6 +36,7 @@ export default function RequestEdit({ params }) {
           ...prev,
           ...res.data,
         }));
+        Swal.close()
       } catch (err) {
         console.error("FETCH ERROR:", err);
       }
@@ -47,37 +49,122 @@ export default function RequestEdit({ params }) {
     setForm((prev) => ({ ...prev, [key]: value ?? "" }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const res = await update(form);
-      console.log("UPDATE RESULT:", res);
-      if (!loading) {
-        router.push("/request/ca");
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      try {
+        Swal.fire({
+          icon: "warning",
+          title: "Do you want to save the changes?",
+          showCancelButton: true,
+          confirmButtonText: "Save",
+          confirmButtonColor: "#199615",
+          denyButtonText: `Don't save`
+        }).then(async (result) => {
+          if (result.isConfirmed) {
+            const res = await update(form);
+            console.log("UPDATE RESULT:", res);
+            console.log(form)
+            if (!loading) {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Update data Request Success"
+              });
+              setTimeout(() => {
+                router.push("/request/ca");
+              }, 2000);
+            }
+          }
+        });
+  
+      } catch (err) {
+        console.error("CREATE ERROR:", err);
+        const Toast = Swal.mixin({
+          toast: true,
+          position: "top-end",
+          showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+        Toast.fire({
+          icon: "error",
+          title: "Update Data Failed"
+        });
       }
-    } catch (err) {
-      console.error("UPDATE ERROR:", err);
-      alert("Failed to update request");
-    }
-  };
-
-  const handleDelete = async () => {
-    const payload = {
-      id: id,
-      deletedBy: "string",
-      doHardDelete: true,
     };
-    try {
-      const res = await deleteData(payload);
-      console.log("DELETE RESULT:", res);
-      if (!loading) {
-        router.push("/request/ca");
+  
+      const handleDelete = async () => {
+        const payload = {
+          id: id,
+          "deletedBy": "string",
+          "doHardDelete": true
+        }
+        try {
+          Swal.fire({
+            icon: "warning",
+            title: "Do you want to Delete the Data?",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            confirmButtonColor: "#FF0000",
+            denyButtonText: `Don't save`
+          }).then(async (result) => {
+            if (result.isConfirmed) {
+            const res = await deleteData(payload)
+            console.log(res)
+            if (!loading) {
+              const Toast = Swal.mixin({
+                toast: true,
+                position: "top-end",
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                  toast.onmouseenter = Swal.stopTimer;
+                  toast.onmouseleave = Swal.resumeTimer;
+                }
+              });
+              Toast.fire({
+                icon: "success",
+                title: "Data Request Deleted"
+              });
+              setTimeout(() => {
+                router.push("/request/ca");
+              }, 2000);
+            }}
+          })
+        } catch (error) {
+          console.error("UPDATE ERROR:", err);
+          const Toast = Swal.mixin({
+            toast: true,
+            position: "top-end",
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+              toast.onmouseenter = Swal.stopTimer;
+              toast.onmouseleave = Swal.resumeTimer;
+            }
+          });
+          Toast.fire({
+            icon: "error",
+            title: "Delete Data Failed"
+          });
+        }
       }
-    } catch (error) {
-      console.error("DELETE ERROR:", error);
-      alert("Failed to delete request");
-    }
-  };
 
   return (
     <div className="lg:max-w-4xl lg:mx-auto p-6 bg-white shadow-xl rounded-xl mt-8 max-w-full mx-10">

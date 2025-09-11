@@ -5,6 +5,7 @@ import TableRequest from "@/components/TableRequest";
 import TableTracker from "@/components/TableTracker";
 import { useRequestStore } from "@/store/requestStore";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function TrackerPage() {
     const { read, loading, error } = useRequestStore();
@@ -12,9 +13,11 @@ export default function TrackerPage() {
 
 
     useEffect(() => {
+        Swal.showLoading()
         async function fetch() {
             const data = await read()
             setRequests(data.data)
+            Swal.close()
         }
         fetch()
     }, [])

@@ -6,6 +6,7 @@ import TableTracker from "@/components/TableTracker";
 import TableTracking from "@/components/TableTracking";
 import { useTrackingStore } from "@/store/trackingStore";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 
 export default function TrackingPage() {
     const { read, loading, error } = useTrackingStore();
@@ -13,13 +14,15 @@ export default function TrackingPage() {
 
 
     useEffect(() => {
+        Swal.showLoading();
         async function fetch() {
             const data = await read()
             setTracking(data.data)
+            Swal.close()
         }
         fetch()
     }, [])
-    
+
     console.log(tracking)
 
 
