@@ -53,7 +53,7 @@ export default function TableRequest({ data }) {
             <option value={25}>25</option>
             <option value={50}>50</option>
           </select>
-          <button className="border rounded px-2 p-2">Filter By</button>
+          <button className="border rounded px-2 bg-green-600 text-white p-1 mx-2 hover:bg-green-700">Filter By</button>
         </div>
         <div>
           <input

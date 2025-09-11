@@ -23,7 +23,6 @@ export default function LoginPage() {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        // validasi kosong
         if (!form.user || !form.password) {
             setFormError("Username dan Password wajib diisi!");
             return;
@@ -49,7 +48,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-500 to-green-600">
+        <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-blue-500 to-green-600">
             <form
                 onSubmit={handleSubmit}
                 className="bg-white p-8 py-10 rounded-3xl shadow-xl w-full max-w-md transform transition-transform duration-300 hover:scale-105"

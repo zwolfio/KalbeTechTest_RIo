@@ -22,12 +22,12 @@ export default function TrackerPage() {
 
 
     return (
-        <div className="p-4">
-            <div className="text-black pb-3 px-3">
+        <div className="p-4 flex flex-col w-full h-full">
+            <div className="text-black pb-3 px-3 flex flex-col h-full">
                 <p className="text-2xl font-bold text-black">Master Tracker</p>
                 <p className="text-md font-thin">Manage data</p>
             </div>
-            <div className="text-black ">
+            <div className="text-black h-full">
                 <TableTracker data={trackers} />
             </div>
         </div>

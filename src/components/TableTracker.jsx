@@ -25,7 +25,7 @@ export default function TableTracker({ data }) {
     async function fetchData() {
       try {
         const data = await read(params);
-        if (data?.data) {            // hanya set jika data valid
+        if (data?.data) {           
         setTrackers(data.data);
       }
       } catch (error) {
@@ -45,7 +45,7 @@ export default function TableTracker({ data }) {
 
 
   return (
-    <div className="bg-white shadow rounded-lg p-4">
+    <div className="bg-white shadow rounded-lg p-4 flex flex-col max-h-full">
       <div className="flex justify-between mb-4">
         <div>
           <label className="text-sm mr-2">Show</label>
@@ -59,11 +59,12 @@ export default function TableTracker({ data }) {
             type="text"
             placeholder="Search item"
             className="border rounded p-1 text-sm"
+             onChange={(e) => handleChange("search", String(e.target.value))}
           />
           <Link href={"/master/tracker/create"} className="ml-2 bg-green-600 text-white px-3 py-1 rounded text-sm">Add</Link>
         </div>
       </div>
-      <div className="overflow-y-auto max-h-screen">
+      <div className="flex overflow-y-auto overflow-x-auto max-w-full">
         <table className="w-full border text-sm border-gray-300 ">
           <thead className="sticky top-0 bg-green-600 text-white">
             <tr>

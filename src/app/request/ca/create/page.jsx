@@ -42,7 +42,7 @@ export default function RequestCreate() {
     };
 
     return (
-        <div className="max-w-4xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-8">
+        <div className="lg:max-w-4xl lg:mx-auto p-6 bg-white shadow-xl rounded-xl mt-8 max-w-full mx-10">
             <h1 className="text-2xl font-bold mb-6 text-gray-800">
                 Create New Request
             </h1>
