@@ -37,33 +37,6 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 # ⚡ Struktur Project
 ![alt text](image-13.png)
-- src/
-- └─ app/
--     ├─ login/
--     ├─ master/
--     │    ├─ tracker/
--     │    │    ├─ [id]/
--     │    │    │   └─ page.jsx
--     │    │    ├─ create/
--     │    │    │   └─ page.jsx
--     │    │    └─ page.jsx
--     │    └─ request/
--     │         └─ ca   (mungkin belum selesai)
-- └─ tracker/
--      ├─ [id]/page.jsx
--      ├─ create/page.jsx
--      └─ page.jsx
-components/
- ├─ Card.jsx
- ├─ Icons.jsx
- ├─ Navbar.jsx
- ├─ Sidebar.jsx
- └─ TableRequest.jsx
-globals.css
-layout.jsx
-not-found.jsx
-page.jsx
-
 
 # Auth
 ## Login
