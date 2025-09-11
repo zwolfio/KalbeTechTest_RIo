@@ -30,14 +30,40 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | **JavaScript**                      | Bahasa pemrograman utama              |
 
 # 📂 CRUD Flow (Request / Tracker)
-Read → Tampilkan di table / list.
-Create → Form input → simpan ke store atau API.
-Update → Klik edit → update store / API.
-Delete → Klik delete → hapus dari store / API.
+- Read → Tampilkan di table / list.
+- Create → Form input → simpan ke store atau API.
+- Update → Klik edit → update store / API.
+- Delete → Klik delete → hapus dari store / API.
 
 # ⚡ Struktur Project
-src/
 ![alt text](image-13.png)
+- src/
+- └─ app/
+-     ├─ login/
+-     ├─ master/
+-     │    ├─ tracker/
+-     │    │    ├─ [id]/
+-     │    │    │   └─ page.jsx
+-     │    │    ├─ create/
+-     │    │    │   └─ page.jsx
+-     │    │    └─ page.jsx
+-     │    └─ request/
+-     │         └─ ca   (mungkin belum selesai)
+- └─ tracker/
+-      ├─ [id]/page.jsx
+-      ├─ create/page.jsx
+-      └─ page.jsx
+components/
+ ├─ Card.jsx
+ ├─ Icons.jsx
+ ├─ Navbar.jsx
+ ├─ Sidebar.jsx
+ └─ TableRequest.jsx
+globals.css
+layout.jsx
+not-found.jsx
+page.jsx
+
 
 # Auth
 ## Login
