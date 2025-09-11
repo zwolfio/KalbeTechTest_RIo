@@ -10,7 +10,7 @@ export default function RequestCreate() {
     const { create, loading } = useRequestStore();
 
     const [form, setForm] = useState({
-        partnerId: "",
+        partnerId: uuidv4(),
         projectCode: "",
         totalFee: "",
         lastStatus: "",
@@ -31,26 +31,7 @@ export default function RequestCreate() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const payload = {
-                ...form,
-                totalFee: form.totalFee ? Number(form.totalFee) : 0,
-                leadTime: form.leadTime ? Number(form.leadTime) : 0,
-                receivedDate: form.receivedDate
-                    ? new Date(form.receivedDate).toISOString()
-                    : null,
-                analysisWipDate: form.analysisWipDate
-                    ? new Date(form.analysisWipDate).toISOString()
-                    : null,
-                analysisCompletedDate: form.analysisCompletedDate
-                    ? new Date(form.analysisCompletedDate).toISOString()
-                    : null,
-                createdBy: "string",
-            };
-
-            console.log("CREATE PAYLOAD:", payload);
-
-            await create(payload);
-
+            await create(form);
             if (!loading) {
                 router.push("/request/ca");
             }
@@ -59,7 +40,6 @@ export default function RequestCreate() {
             alert("Failed to create request");
         }
     };
-
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white shadow-xl rounded-xl mt-8">

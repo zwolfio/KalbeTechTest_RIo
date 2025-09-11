@@ -12,7 +12,7 @@ export const useRequestStore = create((set) => ({
         set({ loading: true, error: null });
         try {
             const res = await getRequest(params);
-            set({ dataRequest: res.data })
+            set({ dataRequest: res.data, loading : false })
             return res;
         } catch (err) {
             set({ error: err.response?.data?.message || "Read Request gagal", loading: false });
