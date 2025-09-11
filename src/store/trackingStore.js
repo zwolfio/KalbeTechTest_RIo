@@ -1,21 +1,21 @@
 // store/authStore.js
 import { create } from "zustand";
-import { getTracker, addTracker, updateTracker, deleteTracker, getTrackerbyid } from "@/lib/services/tracker";
+import { getTracking, addTracking, updateTracking, deleteTracking, getTrackingbyid } from "@/lib/services/tracking";
 
-export const useTrackerStore = create((set) => ({
+export const useTrackingStore = create((set) => ({
     loading: false,
     error: null,
-    dataTracker: null,
-    dataTrackerbyid: null,
+    dataTracking: null,
+    dataTrackingbyID: null,
 
     read: async (params) => {
         set({ loading: true, error: null });
         try {
-            const res = await getTracker(params);
-            set({ dataTracker: res.data, loading: false })
+            const res = await getTracking(params);
+            set({ dataTracking: res.data, loading: false })
             return res;
         } catch (err) {
-            set({ error: err.response?.data?.message || "Read Tracker gagal", loading: false });
+            set({ error: err.response?.data?.message || "Read Tracking gagal", loading: false });
             throw err;
         }
     },
@@ -23,11 +23,11 @@ export const useTrackerStore = create((set) => ({
     readbyid: async (id) => {
         set({ loading: true, error: null });
         try {
-            const res = await getTrackerbyid(id);
+            const res = await getTrackingbyid(id);
             set({ loading: false })
             return res;
         } catch (err) {
-            set({ error: err.response?.data?.message || "Read Tracker gagal", loading: false });
+            set({ error: err.response?.data?.message || "Read Tracking gagal", loading: false });
             throw err;
         }
     },
@@ -35,22 +35,22 @@ export const useTrackerStore = create((set) => ({
     create: async (payload) => {
         set({ loading: true, error: null });
         try {
-            const data = addTracker(payload);
+            const data = addTracking(payload);
             set({ loading: false })
             return data;
         } catch (err) {
-            set({ error: err.response?.data?.message || "Create Tracker gagal", loading: false });
+            set({ error: err.response?.data?.message || "Create Tracking gagal", loading: false });
             throw err;
         }
     },
     update: async (payload) => {
         set({ loading: true, error: null });
         try {
-            const data = await updateTracker(payload);
+            const data = await updateTracking(payload);
             set({ loading: false, });
             return data;
         } catch (err) {
-            set({ error: err.response?.data?.message || "Update Tracker gagal", loading: false });
+            set({ error: err.response?.data?.message || "Update Tracking gagal", loading: false });
             throw err;
         }
     },
@@ -58,11 +58,11 @@ export const useTrackerStore = create((set) => ({
     deleteData: async (payload) => {
         set({ loading: true, error: null });
         try {
-            const data = await deleteTracker(payload);
+            const data = await deleteTracking(payload);
             set({ loading: false, });
             return data;
         } catch (err) {
-            set({ error: err.response?.data?.message || "Delete Tracker gagal", loading: false });
+            set({ error: err.response?.data?.message || "Delete Tracking gagal", loading: false });
             throw err;
         }}
 }));

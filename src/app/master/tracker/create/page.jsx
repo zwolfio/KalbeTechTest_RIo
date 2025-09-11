@@ -4,13 +4,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTrackerStore } from "@/store/trackerStore";
 import { v4 as uuidv4 } from "uuid"; // ✅ untuk generate UUID
+import Swal from "sweetalert2";
 
 export default function TrackerCreate() {
     const router = useRouter();
     const { create } = useTrackerStore();
 
     const [form, setForm] = useState({
-        id: uuidv4(), 
+        id: uuidv4(),
         code: "",
         parentCode: "",
         description: "",
@@ -26,7 +27,7 @@ export default function TrackerCreate() {
         isActive: true,
     });
 
-      const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (key, value) => {
         setForm((prev) => ({ ...prev, [key]: value }));
@@ -35,15 +36,49 @@ export default function TrackerCreate() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true)
+        Swal.showLoading();
+
         try {
             const res = await create(form);
+            Swal.close();
             setLoading(false)
             if (!loading) {
-                router.push("/master/tracker");
+                const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "success",
+                    title: "Created data Tracker in success"
+                });
+                setTimeout(() => {
+                    router.push("/master/tracker");
+                }, 2000);
             }
         } catch (err) {
             console.error(err);
-            alert("Failed to create tracker");
+            const Toast = Swal.mixin({
+                    toast: true,
+                    position: "top-end",
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: (toast) => {
+                        toast.onmouseenter = Swal.stopTimer;
+                        toast.onmouseleave = Swal.resumeTimer;
+                    }
+                });
+                Toast.fire({
+                    icon: "error",
+                    title: "Create Data Failed"
+                });
             setLoading(false)
         }
     }
@@ -130,7 +165,7 @@ export default function TrackerCreate() {
                 <div className="flex gap-3 mt-4">
                     <button
                         type="submit"
-                        className={`bg-blue-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-blue-700 transition ${loading ? "opacity-50 cursor-not-allowed" : ""
+                        className={`bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition ${loading ? "opacity-50 cursor-not-allowed" : ""
                             }`}
                         disabled={loading}
                     >

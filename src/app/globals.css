@@ -2,7 +2,14 @@
 
 html, body {
   height: 100%;
-  background-color: #f3f4f6; /* bg-gray-100 */
-  color: #111827; /* text-gray-900 */
+  background-color: #f3f4f6; 
+  color: #111827; 
   border-color: grey;
 }
+
+.swal2-popup {
+  @apply  bg-white w-max h-max rounded-xl shadow-md;
+}
+
+
+
