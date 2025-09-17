@@ -30,13 +30,12 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 | **JavaScript**                      | Bahasa pemrograman utama              |
 
 # 📂 CRUD Flow (Request / Tracker)
-Read → Tampilkan di table / list.
-Create → Form input → simpan ke store atau API.
-Update → Klik edit → update store / API.
-Delete → Klik delete → hapus dari store / API.
+- Read → Tampilkan di table / list.
+- Create → Form input → simpan ke store atau API.
+- Update → Klik edit → update store / API.
+- Delete → Klik delete → hapus dari store / API.
 
 # ⚡ Struktur Project
-src/
 ![alt text](image-13.png)
 
 # Auth
