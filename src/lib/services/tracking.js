@@ -5,11 +5,11 @@ export const getTracking = async (params) => {
   const token = localStorage.getItem("token");
   const res = await api.get(`/feature/trackings`, {
     headers: {
-      "X-Paging-Limit": params?.limit || 25,
-      "X-Paging-Offset": params?.offset || 0,
-      "X-Paging-SortBy": params?.sortBy || "created_on",
-      "X-Paging-SortOrder": params?.sortOrder || "DESC",
-      "X-Paging-Search": params?.search || "",
+      "X-PAGING-Limit": params?.limit || 25,
+      "X-PAGING-Offset": params?.offset || 0,
+      "X-PAGING-SortBy": params?.sortBy || "created_on",
+      "X-PAGING-SortOrder": params?.sortOrder || "DESC",
+      "X-PAGING-Search": params?.search || "",
       Authorization: `Bearer ${JSON.parse(token)}`,
     },
   });

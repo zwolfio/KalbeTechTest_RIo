@@ -20,7 +20,8 @@ export const useAuthStore = create((set) => ({
         });
         document.cookie = `token=${res.data?.token?.access}; path=/; Secure; SameSite=Lax`;
         localStorage.setItem("user", JSON.stringify(res.data?.username));
-        localStorage.setItem("token", JSON.stringify(res.data?.token?.access));
+        localStorage.setItem("token", JSON.stringify(res.data?.token?.access)); 
+        localStorage.setItem("refreshToken", JSON.stringify(res.data?.token?.refresh)); 
       }
       console.log(res.data)
       return res;

@@ -3,13 +3,13 @@ import api from "@/utils/axios";
 
 export const getTracker = async (params) => {
   const token = localStorage.getItem("token");
-  const res = await api.get(`/feature/trackers`, {
+  const res = await api.get(`/feature/trackers/paging`, {
     headers: {
-      "X-Paging-Limit": params?.limit || 25,
-      "X-Paging-Offset": params?.offset || 0,
-      "X-Paging-SortBy": params?.sortBy || "created_on",
-      "X-Paging-SortOrder": params?.sortOrder || "DESC",
-      "X-Paging-Search": params?.search || "",
+      "X-PAGING-Limit": params?.limit || 10,
+      "X-PAGING-Offset": params?.offset || 0,
+      "X-PAGING-SortBy": params?.sortBy || "code",
+      "X-PAGING-SortOrder": params?.sortOrder || "ASC",
+      "X-PAGING-Search": params?.search || "%",
       Authorization: `Bearer ${JSON.parse(token)}`,
     },
   });

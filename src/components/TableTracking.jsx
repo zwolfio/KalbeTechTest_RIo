@@ -6,30 +6,36 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useTrackingStore } from "@/store/trackingStore";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 
 export default function TableTracking({ data }) {
-  
+
 
   const { read } = useTrackingStore()
   const [Trackings, setTrackings] = useState([]);
   const [params, setParams] = useState({
     limit: 10,
     offset: 0,
-    sortBy: "name",
-    sortOrder: "asc",
-    search: "",
+    sortBy: "code",
+    sortOrder: "ASC",
+    search: "%",
   });
 
   useEffect(() => {
     async function fetchData() {
+      Swal.showLoading();
+
       try {
         const data = await read(params);
-        if (data?.data) {           
-        setTrackings(data.data);
-      }
+        if (data?.data) {
+          setTrackings(data.data);
+          Swal.close()
+        }
       } catch (error) {
         console.error("Error fetching Trackings:", error);
+        Swal.close()
+
       }
     }
 
@@ -50,6 +56,7 @@ export default function TableTracking({ data }) {
         <div>
           <label className="text-sm mr-2">Show</label>
           <select className="border rounded p-1 text-sm" onChange={(e) => handleChange("limit", Number(e.target.value))}>
+            <option value={10}>10</option>
             <option value={25}>25</option>
             <option value={50}>50</option>
           </select>
@@ -59,7 +66,7 @@ export default function TableTracking({ data }) {
             type="text"
             placeholder="Search item"
             className="border rounded p-1 text-sm"
-             onChange={(e) => handleChange("search", String(e.target.value))}
+            onChange={(e) => handleChange("search", String(e.target.value))}
           />
           <Link href={"/tracker/create"} className="ml-2 bg-green-600 text-white px-3 py-1 rounded text-sm">Add</Link>
         </div>

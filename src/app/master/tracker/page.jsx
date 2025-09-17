@@ -7,20 +7,6 @@ import { useEffect, useState } from "react";
 import Swal from 'sweetalert2'
 
 export default function TrackerPage() {
-    const { read, loading, error } = useTrackerStore();
-    const [trackers, setTrackers] = useState()
-
-
-    useEffect(() => {
-        Swal.showLoading();
-        async function fetch() {
-            const data = await read()
-            setTrackers(data.data)
-            Swal.close();
-        }
-        fetch()
-    }, [])
-
 
     return (
         <div className="p-4 flex flex-col w-full h-full">
@@ -29,7 +15,7 @@ export default function TrackerPage() {
                 <p className="text-md font-thin">Manage data</p>
             </div>
             <div className="text-black h-full">
-                <TableTracker data={trackers} />
+                <TableTracker />
             </div>
         </div>
     );
